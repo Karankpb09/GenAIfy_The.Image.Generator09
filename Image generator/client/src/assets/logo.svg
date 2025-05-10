@@ -1,0 +1,26 @@
+<svg width="300" height="100" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <style>
+    .text { font-family: 'Segoe UI', sans-serif; font-size: 32px; font-weight: bold; }
+    .gen { fill: #00f0ff; filter: url(#glow); }
+    .ai { fill: #ff00ff; filter: url(#glow); }
+  </style>
+  <!-- Camera Icon -->
+  <g filter="url(#glow)">
+    <rect x="10" y="30" width="40" height="30" rx="5" ry="5" stroke="#00f0ff" stroke-width="2" fill="none"/>
+    <circle cx="30" cy="45" r="8" fill="#ff00ff"/>
+    <circle cx="32" cy="43" r="2" fill="#ffffff"/>
+  </g>
+  <!-- Text -->
+  <text x="60" y="55" class="text">
+    <tspan class="gen">Gen</tspan><tspan class="ai">AI</tspan><tspan class="gen">fy</tspan>
+  </text>
+</svg>
