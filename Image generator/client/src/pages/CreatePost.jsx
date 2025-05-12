@@ -38,7 +38,7 @@ const CreatePost = () => {
       try {
         setGeneratingImg(true);
         const response = await fetch(
-          'http://localhost:8080/api/v1/replicate/generate-image',
+          'http://localhost:8080/api/v1/stability/generate-image', // Updated endpoint
           {
             method: 'POST',
             headers: {
@@ -55,8 +55,18 @@ const CreatePost = () => {
           throw new Error(`Image generation failed: ${errorText}`);
         }
 
-        const data = await response.json();
-        setForm({ ...form, photo: data.image });
+        // Handle the response based on what your backend is sending
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          setForm({ ...form, photo: data.image }); // Assuming JSON with base64
+        } else if (contentType && contentType.includes('image/')) {
+          const blob = await response.blob();
+          const imageUrl = URL.createObjectURL(blob);
+          setForm({ ...form, photo: imageUrl }); // Handling raw image data
+        } else {
+          throw new Error('Unexpected response format from the backend');
+        }
       } catch (error) {
         alert(error.message || 'Something went wrong');
       } finally {
@@ -178,4 +188,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-

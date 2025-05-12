@@ -1,14 +1,17 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-const connectDB = (url) => {
-  mongoose.set('strictQuery', true);
+dotenv.config();
 
-  mongoose.connect(url)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((err) => {
-      console.error('Failed to connect with MongoDB');
-      console.error(err);
-    });
+const connectDB = () => {
+    mongoose.set('strictQuery', true);
+
+    mongoose.connect(process.env.MONGODB_URL)
+        .then(() => console.log('✅ Connected to MongoDB'))
+        .catch((err) => {
+            console.error('❌ Failed to connect with MongoDB');
+            console.error(err);
+        });
 };
 
 export default connectDB;
